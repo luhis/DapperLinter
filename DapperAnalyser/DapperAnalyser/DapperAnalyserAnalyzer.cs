@@ -64,12 +64,17 @@ namespace DapperAnalyser
                 return;
 
             var query = invocationExpr.ArgumentList.Arguments.First();
-            var lit = query.Expression as LiteralExpressionSyntax;
 
-            if (!SqlStringValidator.IsValid(lit.Token.Text))
+            if (query.Expression is LiteralExpressionSyntax lit && !SqlStringValidator.IsValid(lit.Token.ValueText))
             {
                 var diagnostic = Diagnostic.Create(Rule, lit.GetLocation(), lit);
                 context.ReportDiagnostic(diagnostic);
+            }
+            else if (query.Expression is IdentifierNameSyntax ident)
+            {
+                 //&& !SqlStringValidator.IsValid(ident.Identifier.ValueText);
+                //var diagnostic = Diagnostic.Create(Rule, ident.GetLocation(), ident);
+                //context.ReportDiagnostic(diagnostic);
             }
         }
 
