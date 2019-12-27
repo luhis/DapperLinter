@@ -68,7 +68,7 @@ namespace DapperDemo
             using (var connection = new SqlConnection(
                 ""Server = tcp:mhknbn2kdz.database.windows.net; Database = AdventureWorks2012; User ID = sqlfamily; Password = sqlf@m1ly; ""))
             {
-                return connection.Query<int>(""SELECT * from Person.Person where FirstName = 'Mark'"");
+                return connection.Query<int>(""SELECT * FROM Person.Person WHERE FirstName = 'Mark'"");
             }
         }
     }
@@ -186,7 +186,7 @@ namespace DapperDemo
             using (var connection = new SqlConnection(
                 ""Server = tcp:mhknbn2kdz.database.windows.net; Database = AdventureWorks2012; User ID = sqlfamily; Password = sqlf@m1ly; ""))
             {
-                return await connection.QueryAsync<int>(""SELECT * from Person.Person where FirstName = 'Mark'"");
+                return await connection.QueryAsync<int>(""SELECT * FROM Person.Person WHERE FirstName = 'Mark'"");
             }
         }
     }
@@ -212,7 +212,7 @@ namespace DapperDemo
             using (var connection = new SqlConnection(
                 ""Server = tcp:mhknbn2kdz.database.windows.net; Database = AdventureWorks2012; User ID = sqlfamily; Password = sqlf@m1ly; ""))
             {
-                return connection.Query<int>(""SELECT * from Person.Person where FirstName = 'Mark'"");
+                return connection.Query<int>(""SELECT * FROM Person.Person WHERE FirstName = 'Mark'"");
             }
         }
     }

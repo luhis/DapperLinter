@@ -4,7 +4,7 @@ namespace DapperAnalyser
     {
         public static bool IsValid(string s)
         {
-            return s == s.Replace("select", "SELECT");
+            return s == SqlStringFixer.Fix(s);
         }
     }
 }
