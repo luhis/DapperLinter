@@ -1,9 +1,9 @@
-﻿namespace DapperAnalyser.Test.Verifiers
+﻿namespace DapperAnalyser.Test
 {
     using FluentAssertions;
     using Xunit;
 
-    public class StringFixerVerifier
+    public class StringFixerUnitTests
     {
         [Theory]
         [InlineData("SELECT * FROM Users", "SELECT * FROM Users")]

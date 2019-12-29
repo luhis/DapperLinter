@@ -18,6 +18,7 @@ namespace DapperAnalyser
             {ToRegex("inner join"), "JOIN"},
             {ToRegex("join"), "JOIN"},
             {ToRegex("insert into"), "INSERT"},
+            {ToRegex("insert"), "INSERT"},
         };
 
         public static string Fix(string s)
