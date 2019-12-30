@@ -35,8 +35,9 @@ namespace DapperAnalyser
             var diagnosticSpan = diagnostic.Location.SourceSpan;
 
             // Find the type declaration identified by the diagnostic.
-            var declaration = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf()
-                .OfType<LiteralExpressionSyntax>().First();
+            var ancestors = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf();
+            var declaration = ancestors.OfType<LiteralExpressionSyntax>().FirstOrDefault() ?? ancestors.OfType<LocalDeclarationStatementSyntax>().First().DescendantNodes().OfType<LiteralExpressionSyntax>().Single();
+          
 
             // Register a code action that will invoke the fix.
             context.RegisterCodeFix(

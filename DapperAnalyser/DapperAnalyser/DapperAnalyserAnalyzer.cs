@@ -76,15 +76,15 @@ namespace DapperAnalyser
             {
                 ////var dec = context.SemanticModel.GetDeclaredSymbol(ident);
 
-               // var flow = context.SemanticModel.AnalyzeDataFlow(ident);
-               var dec = context.SemanticModel.GetDeclarationDiagnostics(ident.Span);
+                var flow = context.SemanticModel.AnalyzeDataFlow(ident);
                 var value = context.SemanticModel.GetConstantValue(ident);
-               // var flowIn = flow.DataFlowsIn.Single().;
+                var flowIn = flow.DataFlowsIn.Single();
+               var dec = context.SemanticModel.GetDeclaredSymbol(flowIn.DeclaringSyntaxReferences.First().GetSyntax());
                 //flowIn.
                 //&& !SqlStringValidator.IsValid(ident.Identifier.ValueText);
                 if (value.HasValue && !SqlStringValidator.IsValid(value.Value as string))
                 {
-                    var diagnostic = Diagnostic.Create(Rule, ident.GetLocation(), $"\"{value.Value as string}\"");
+                    var diagnostic = Diagnostic.Create(Rule, flowIn.DeclaringSyntaxReferences.First().GetSyntax().GetLocation(), $"\"{value.Value as string}\"");
                     context.ReportDiagnostic(diagnostic);
                 }
             }

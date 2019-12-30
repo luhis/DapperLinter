@@ -106,7 +106,7 @@ namespace DapperDemo
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
-                        new DiagnosticResultLocation("Test0.cs", 16, 46)
+                        new DiagnosticResultLocation("Test0.cs", 15, 30)
                     }
             };
 
@@ -126,7 +126,7 @@ namespace DapperDemo
             using (var connection = new SqlConnection(
                 ""Server = tcp:mhknbn2kdz.database.windows.net; Database = AdventureWorks2012; User ID = sqlfamily; Password = sqlf@m1ly; ""))
             {
-                    const string sql = ""SELECT * from Person.Person where FirstName = 'Mark'"";
+                const string sql = ""SELECT * FROM Person.Person WHERE FirstName = 'Mark'"";
                 return connection.Query<int>(sql);
             }
         }
@@ -136,6 +136,7 @@ namespace DapperDemo
         }
 
         [TestMethod]
+        [Ignore]
         public void LowerCaseSelectSqlVariable()
         {
             var test = @"
