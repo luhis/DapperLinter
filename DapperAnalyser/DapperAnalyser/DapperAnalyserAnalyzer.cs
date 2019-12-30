@@ -74,14 +74,19 @@ namespace DapperAnalyser
             }
             else if (query.Expression is IdentifierNameSyntax ident)
             {
-                var dec = context.SemanticModel.GetDeclaredSymbol(ident);
+                ////var dec = context.SemanticModel.GetDeclaredSymbol(ident);
 
-                //var flow = context.SemanticModel.AnalyzeDataFlow(ident);
-                //var flowIn = flow.DataFlowsIn.Single().Locations.First();
+               // var flow = context.SemanticModel.AnalyzeDataFlow(ident);
+               var dec = context.SemanticModel.GetDeclarationDiagnostics(ident.Span);
+                var value = context.SemanticModel.GetConstantValue(ident);
+               // var flowIn = flow.DataFlowsIn.Single().;
                 //flowIn.
                 //&& !SqlStringValidator.IsValid(ident.Identifier.ValueText);
-                //var diagnostic = Diagnostic.Create(Rule, ident.GetLocation(), ident);
-                //context.ReportDiagnostic(diagnostic);
+                if (value.HasValue && !SqlStringValidator.IsValid(value.Value as string))
+                {
+                    var diagnostic = Diagnostic.Create(Rule, ident.GetLocation(), $"\"{value.Value as string}\"");
+                    context.ReportDiagnostic(diagnostic);
+                }
             }
         }
 

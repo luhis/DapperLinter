@@ -77,6 +77,65 @@ namespace DapperDemo
         }
 
         [TestMethod]
+        public void LowerCaseSelectSqlConst()
+        {
+            var test = @"
+namespace DapperDemo
+{
+    using Dapper;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+
+    public class C1
+    {
+        public IEnumerable<int> A()
+        {
+            using (var connection = new SqlConnection(
+                ""Server = tcp:mhknbn2kdz.database.windows.net; Database = AdventureWorks2012; User ID = sqlfamily; Password = sqlf@m1ly; ""))
+            {
+                const string sql = ""select * from Person.Person where FirstName = 'Mark'"";
+                return connection.Query<int>(sql);
+            }
+        }
+    }
+}";
+            var expected = new DiagnosticResult
+            {
+                Id = "DapperAnalyser",
+                Message = "'\"select * from Person.Person where FirstName = 'Mark'\"' contains incorrectly cased reserve words",
+                Severity = DiagnosticSeverity.Warning,
+                Locations =
+                    new[] {
+                        new DiagnosticResultLocation("Test0.cs", 16, 46)
+                    }
+            };
+
+            VerifyCSharpDiagnostic(test, expected);
+
+            var fixtest = @"
+namespace DapperDemo
+{
+    using Dapper;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+
+    public class C1
+    {
+        public IEnumerable<int> A()
+        {
+            using (var connection = new SqlConnection(
+                ""Server = tcp:mhknbn2kdz.database.windows.net; Database = AdventureWorks2012; User ID = sqlfamily; Password = sqlf@m1ly; ""))
+            {
+                    const string sql = ""SELECT * from Person.Person where FirstName = 'Mark'"";
+                return connection.Query<int>(sql);
+            }
+        }
+    }
+}";
+            VerifyCSharpFix(test, fixtest);
+        }
+
+        [TestMethod]
         public void LowerCaseSelectSqlVariable()
         {
             var test = @"

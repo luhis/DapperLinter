@@ -42,12 +42,12 @@ namespace DapperAnalyser
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: title,
-                    createChangedDocument: c => MakeUppercaseAsync(context.Document, declaration, c),
+                    createChangedDocument: c => this.CorrectSql(context.Document, declaration, c),
                     equivalenceKey: title),
                 diagnostic);
         }
 
-        private async Task<Document> MakeUppercaseAsync(Document document, LiteralExpressionSyntax typeDecl,
+        private async Task<Document> CorrectSql(Document document, LiteralExpressionSyntax typeDecl,
             CancellationToken cancellationToken)
         {
             // Compute new uppercase name.
