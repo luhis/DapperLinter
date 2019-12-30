@@ -15,7 +15,7 @@ namespace DapperAnalyser
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(DapperAnalyserCodeFixProvider)), Shared]
     public class DapperAnalyserCodeFixProvider : CodeFixProvider
     {
-        private const string title = "Make uppercase";
+        private const string title = "Correct SQL";
 
         public sealed override ImmutableArray<string> FixableDiagnosticIds =>
             ImmutableArray.Create(DapperAnalyserAnalyzer.DiagnosticId);

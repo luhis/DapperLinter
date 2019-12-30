@@ -36,8 +36,7 @@ namespace DapperAnalyser
         private static bool IsDapperSqlMapper(INamedTypeSymbol nts)
         {
             var ntst = $"{nts.ContainingNamespace}.{nts.Name}";
-            var dap = typeof(Dapper.SqlMapper);
-            return dap.FullName == ntst;
+            return "Dapper.SqlMapper" == ntst;
         }
 
         private void AnalyzeMethod(SyntaxNodeAnalysisContext context)
