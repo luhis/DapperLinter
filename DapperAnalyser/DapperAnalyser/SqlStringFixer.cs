@@ -19,6 +19,15 @@ namespace DapperAnalyser
             {ToRegex("join"), "JOIN"},
             {ToRegex("insert into"), "INSERT"},
             {ToRegex("insert"), "INSERT"},
+            {ToRegex("order by"), "ORDER BY"},
+            {ToRegex("group by"), "GROUP BY"},
+            {ToRegex("asc"), "ASC"},
+            {ToRegex("desc"), "DESC"},
+            {ToRegex("and"), "AND"},
+            {ToRegex("or"), "OR"},
+            {ToRegex("values"), "VALUES"},
+            {ToRegex("update"), "UPDATE"},
+            {ToRegex("set"), "SET"},
         };
 
         public static string Fix(string s)
