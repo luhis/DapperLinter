@@ -19,6 +19,7 @@
             "SELECT * FROM Users JOIN Departments ON Departments.DepartmentId = Users.DepartmentId")]
         [InlineData("insert into Users (UserId) values (1)", "INSERT Users (UserId) VALUES (1)")]
         [InlineData("update Users set name = 1 where id = 2", "UPDATE Users SET name = 1 WHERE id = 2")]
+        [InlineData("SELECT * into newtable FROM oldtable", "SELECT * INTO newtable FROM oldtable")]
         public void ShouldUpperCaseReserveWords(string input, string output)
         {
             SqlStringFixer.Fix(input).Should().Be(output);

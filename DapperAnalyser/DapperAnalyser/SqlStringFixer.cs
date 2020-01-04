@@ -28,6 +28,7 @@ namespace DapperAnalyser
             {ToRegex("values"), "VALUES"},
             {ToRegex("update"), "UPDATE"},
             {ToRegex("set"), "SET"},
+            {ToRegex("into"), "INTO"},
         };
 
         public static string Fix(string s)

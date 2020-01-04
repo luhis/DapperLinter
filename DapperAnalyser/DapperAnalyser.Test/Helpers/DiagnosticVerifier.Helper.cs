@@ -11,6 +11,8 @@ using System.Data.Common;
 
 namespace TestHelper
 {
+    using System.Reflection;
+
     /// <summary>
     /// Class for turning strings into documents and getting the diagnostics on them
     /// All methods are static
@@ -170,7 +172,7 @@ namespace TestHelper
                 .AddMetadataReference(projectId, DbConnectionReference)
                 .AddMetadataReference(projectId, ClonableReference)
                 .AddMetadataReference(projectId, MetadataReference.CreateFromFile(typeof(System.ComponentModel.IComponent).Assembly.Location))
-                .AddMetadataReference(projectId, MetadataReference.CreateFromFile(@"C:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.2.5\netstandard.dll")); //todo do this properly
+                .AddMetadataReference(projectId, MetadataReference.CreateFromFile(Assembly.Load("netstandard, Version=2.0.0.0").Location));
 
             int count = 0;
             foreach (var source in sources)
