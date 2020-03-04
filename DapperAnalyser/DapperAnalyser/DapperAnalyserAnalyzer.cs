@@ -54,9 +54,11 @@ namespace DapperAnalyser
             if (targetFunctionNames.All(a => memberAccessExpr.Name.Identifier.Text != a))
                 return;
 
+            var semanticModel = context.SemanticModel;
+
             // Now we need to get the semantic model of this node to get the type of the node
             // So, we can check it is of type string whatever the way you define it (string or System.String)
-            var memberSymbol = context.SemanticModel.GetSymbolInfo(memberAccessExpr).Symbol as IMethodSymbol;
+            var memberSymbol = semanticModel.GetSymbolInfo(memberAccessExpr).Symbol as IMethodSymbol;
             if (memberSymbol == null)
                 return;
 
@@ -75,10 +77,10 @@ namespace DapperAnalyser
             {
                 ////var dec = context.SemanticModel.GetDeclaredSymbol(ident);
 
-                var flow = context.SemanticModel.AnalyzeDataFlow(ident);
-                var value = context.SemanticModel.GetConstantValue(ident);
+                var flow = semanticModel.AnalyzeDataFlow(ident);
+                var value = semanticModel.GetConstantValue(ident);
                 var flowIn = flow.DataFlowsIn.Single();
-               var dec = context.SemanticModel.GetDeclaredSymbol(flowIn.DeclaringSyntaxReferences.First().GetSyntax());
+               var dec = semanticModel.GetDeclaredSymbol(flowIn.DeclaringSyntaxReferences.First().GetSyntax());
                 //flowIn.
                 //&& !SqlStringValidator.IsValid(ident.Identifier.ValueText);
                 if (value.HasValue && !SqlStringValidator.IsValid(value.Value as string))

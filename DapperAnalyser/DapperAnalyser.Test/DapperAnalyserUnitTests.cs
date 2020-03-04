@@ -7,7 +7,7 @@ using TestHelper;
 namespace DapperAnalyser.Test
 {
     [TestClass]
-    public class UnitTest : CodeFixVerifier
+    public class DapperAnalyserUnitTest : CodeFixVerifier
     {
 
         //No diagnostics expected to show up
@@ -279,7 +279,31 @@ namespace DapperDemo
 }";
 
             VerifyCSharpDiagnostic(test);
+        }
 
+        [TestMethod]
+        public void NotDapper()
+        {
+            var test = @"
+namespace DapperDemo
+{
+    using System;
+    using System.Collections.Generic;
+
+    public class Class2
+    {
+        public IEnumerable<Customer> A()
+        {
+            using (var connection = new Object())
+            {
+                const string x = ""select* from Person.Person where FirstName = 'Mark'"";
+            return connection.Query<Customer>(x);
+        }
+    }
+}
+}";
+
+            VerifyCSharpDiagnostic(test);
         }
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()
