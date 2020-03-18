@@ -12,13 +12,13 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace DapperAnalyser
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(DapperAnalyserCodeFixProvider)), Shared]
-    public class DapperAnalyserCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(DapperSqlAnalyserCodeFixProvider)), Shared]
+    public class DapperSqlAnalyserCodeFixProvider : CodeFixProvider
     {
         private const string title = "Correct SQL";
 
         public sealed override ImmutableArray<string> FixableDiagnosticIds =>
-            ImmutableArray.Create(DapperAnalyserAnalyzer.DiagnosticId);
+            ImmutableArray.Create(DapperSqlAnalyzer.DiagnosticId);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {
