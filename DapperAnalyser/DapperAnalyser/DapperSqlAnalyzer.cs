@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace DapperAnalyser
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class DapperAnalyserAnalyzer : DiagnosticAnalyzer
+    public class DapperSqlAnalyzer : DiagnosticAnalyzer
     {
         public const string DiagnosticId = "DapperAnalyser";
 

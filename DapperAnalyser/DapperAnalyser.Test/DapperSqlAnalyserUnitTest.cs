@@ -1,17 +1,15 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestHelper;
+using Xunit;
 
 namespace DapperAnalyser.Test
 {
-    [TestClass]
-    public class DapperAnalyserUnitTest : CodeFixVerifier
+    public class DapperSqlAnalyserUnitTest : CodeFixVerifier
     {
-
         //No diagnostics expected to show up
-        [TestMethod]
+        [Fact]
         public void EmptyCode()
         {
             var test = @"";
@@ -19,7 +17,7 @@ namespace DapperAnalyser.Test
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestMethod]
+        [Fact]
         public void LowerCaseSelect()
         {
             var test = @"
@@ -76,7 +74,7 @@ namespace DapperDemo
             VerifyCSharpFix(test, fixtest);
         }
 
-        [TestMethod]
+        [Fact]
         public void LowerCaseSelectSqlConst()
         {
             var test = @"
@@ -135,8 +133,7 @@ namespace DapperDemo
             VerifyCSharpFix(test, fixtest);
         }
 
-        [TestMethod]
-        [Ignore]
+        [Fact(Skip = "todo")]
         public void LowerCaseSelectSqlVariable()
         {
             var test = @"
@@ -195,7 +192,7 @@ namespace DapperDemo
             VerifyCSharpFix(test, fixtest);
         }
 
-        [TestMethod]
+        [Fact]
         public void LowerCaseSelectAsync()
         {
             var test = @"
@@ -255,7 +252,7 @@ namespace DapperDemo
         }
 
         //Diagnostic and CodeFix both triggered and checked for
-        [TestMethod]
+        [Fact]
         public void UpperCaseSelect()
         {
             var test = @"
@@ -281,7 +278,7 @@ namespace DapperDemo
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestMethod]
+        [Fact]
         public void NotDapper()
         {
             var test = @"
@@ -308,12 +305,12 @@ namespace DapperDemo
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new DapperAnalyserCodeFixProvider();
+            return new DapperSqlAnalyserCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new DapperAnalyserAnalyzer();
+            return new DapperSqlAnalyzer();
         }
     }
 }
