@@ -6,7 +6,7 @@ using Xunit;
 
 namespace DapperAnalyser.Test
 {
-    public class DapperSqlAnalyserUnitTest : CodeFixVerifier
+    public class DapperSqlAnalyzerUnitTest : CodeFixVerifier
     {
         //No diagnostics expected to show up
         [Fact]
@@ -305,7 +305,7 @@ namespace DapperDemo
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new DapperSqlAnalyserCodeFixProvider();
+            return new DapperSqlAnalyzerCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()

@@ -12,8 +12,8 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace DapperAnalyser
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(DapperSqlAnalyserCodeFixProvider)), Shared]
-    public class DapperSqlAnalyserCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(DapperSqlAnalyzerCodeFixProvider)), Shared]
+    public class DapperSqlAnalyzerCodeFixProvider : CodeFixProvider
     {
         private const string title = "Correct SQL";
 

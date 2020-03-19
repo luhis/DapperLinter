@@ -1,19 +1,18 @@
-using System.Collections.Immutable;
-using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
+using System.Collections.Immutable;
 using Microsoft.CodeAnalysis.CSharp;
+using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DapperAnalyser
 {
-    [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class DapperSqlAnalyzer : DiagnosticAnalyzer
-    {
-        public const string DiagnosticId = "DapperSqlAnalyser";
 
-        // You can change these strings in the Resources.resx file. If you do not want your analyzer to be localize-able, you can use regular strings for Title and MessageFormat.
-        // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Localizing%20Analyzers.md for more on localization
+    [DiagnosticAnalyzer(LanguageNames.CSharp)]
+    public class DapperConstAnalyzer : DiagnosticAnalyzer
+    {
+        private const string DiagnosticId = "DapperConstAnalyser";
+
         private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.AnalyzerTitle), Resources.ResourceManager, typeof(Resources));
         private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
         private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.AnalyzerDescription), Resources.ResourceManager, typeof(Resources));
@@ -22,7 +21,6 @@ namespace DapperAnalyser
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
-
         public override void Initialize(AnalysisContext context)
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze | GeneratedCodeAnalysisFlags.ReportDiagnostics);
@@ -49,7 +47,7 @@ namespace DapperAnalyser
             if (memberAccessExpr == null)
                 return;
 
-            var targetFunctionNames = new[] {"Query", "QueryAsync", "Execute", "ExecuteAsync" };
+            var targetFunctionNames = new[] { "Query", "QueryAsync", "Execute", "ExecuteAsync" };
 
             if (targetFunctionNames.All(a => memberAccessExpr.Name.Identifier.Text != a))
                 return;
@@ -80,7 +78,7 @@ namespace DapperAnalyser
                 var flow = semanticModel.AnalyzeDataFlow(ident);
                 var value = semanticModel.GetConstantValue(ident);
                 var flowIn = flow.DataFlowsIn.Single();
-               var dec = semanticModel.GetDeclaredSymbol(flowIn.DeclaringSyntaxReferences.First().GetSyntax());
+                var dec = semanticModel.GetDeclaredSymbol(flowIn.DeclaringSyntaxReferences.First().GetSyntax());
                 //flowIn.
                 //&& !SqlStringValidator.IsValid(ident.Identifier.ValueText);
                 if (value.HasValue && !SqlStringValidator.IsValid(value.Value as string))
@@ -90,20 +88,5 @@ namespace DapperAnalyser
                 }
             }
         }
-
-        ////private static void AnalyzeSymbol(SymbolAnalysisContext context)
-        ////{
-        ////    // TODO: Replace the following code with your own analysis, generating Diagnostic objects for any issues you find
-        ////    var namedTypeSymbol = (INamedTypeSymbol)context.Symbol;
-
-        ////    // Find just those named type symbols with names containing lowercase letters.
-        ////    if (namedTypeSymbol.Name.ToCharArray().Any(char.IsLower))
-        ////    {
-        ////        // For all such symbols, produce a diagnostic.
-        ////        var diagnostic = Diagnostic.Create(Rule, namedTypeSymbol.Locations[0], namedTypeSymbol.Name);
-
-        ////        context.ReportDiagnostic(diagnostic);
-        ////    }
-        ////}
     }
 }
