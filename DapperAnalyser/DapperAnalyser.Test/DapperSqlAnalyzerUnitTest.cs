@@ -41,7 +41,7 @@ namespace DapperDemo
 }";
             var expected = new DiagnosticResult
             {
-                Id = "DapperAnalyser",
+                Id = "DapperSqlAnalyser",
                 Message = "'\"select * from Person.Person where FirstName = 'Mark'\"' contains incorrectly cased reserve words",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
@@ -99,7 +99,7 @@ namespace DapperDemo
 }";
             var expected = new DiagnosticResult
             {
-                Id = "DapperAnalyser",
+                Id = "DapperSqlAnalyser",
                 Message = "'\"select * from Person.Person where FirstName = 'Mark'\"' contains incorrectly cased reserve words",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
@@ -217,7 +217,7 @@ namespace DapperDemo
 }";
             var expected = new DiagnosticResult
             {
-                Id = "DapperAnalyser",
+                Id = "DapperSqlAnalyser",
                 Message = "'\"select * from Person.Person where FirstName = 'Mark'\"' contains incorrectly cased reserve words",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
