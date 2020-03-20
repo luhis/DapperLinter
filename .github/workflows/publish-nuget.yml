@@ -22,6 +22,7 @@ jobs:
       - name: Publish if version is updated
         uses: rohith/publish-nuget@v2
         with: # All inputs are optional (details given below)
+           project_file_path: DapperAnalyser/DapperAnalyser/DapperAnalyser.csproj
            project_dir: DapperAnalyser/DapperAnalyser # Defaults to repository root
         #   tag_format: v* # [*] gets replaced with version
            nuget_key: ${{secrets.NUGET_API_KEY}} # nuget.org API key
