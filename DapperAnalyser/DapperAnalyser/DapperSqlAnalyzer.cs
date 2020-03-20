@@ -75,14 +75,9 @@ namespace DapperAnalyser
             }
             else if (query.Expression is IdentifierNameSyntax ident)
             {
-                ////var dec = context.SemanticModel.GetDeclaredSymbol(ident);
-
                 var flow = semanticModel.AnalyzeDataFlow(ident);
                 var value = semanticModel.GetConstantValue(ident);
                 var flowIn = flow.DataFlowsIn.Single();
-               var dec = semanticModel.GetDeclaredSymbol(flowIn.DeclaringSyntaxReferences.First().GetSyntax());
-                //flowIn.
-                //&& !SqlStringValidator.IsValid(ident.Identifier.ValueText);
                 if (value.HasValue && !SqlStringValidator.IsValid(value.Value as string))
                 {
                     var diagnostic = Diagnostic.Create(Rule, flowIn.DeclaringSyntaxReferences.First().GetSyntax().GetLocation(), $"\"{value.Value as string}\"");
@@ -90,20 +85,5 @@ namespace DapperAnalyser
                 }
             }
         }
-
-        ////private static void AnalyzeSymbol(SymbolAnalysisContext context)
-        ////{
-        ////    // TODO: Replace the following code with your own analysis, generating Diagnostic objects for any issues you find
-        ////    var namedTypeSymbol = (INamedTypeSymbol)context.Symbol;
-
-        ////    // Find just those named type symbols with names containing lowercase letters.
-        ////    if (namedTypeSymbol.Name.ToCharArray().Any(char.IsLower))
-        ////    {
-        ////        // For all such symbols, produce a diagnostic.
-        ////        var diagnostic = Diagnostic.Create(Rule, namedTypeSymbol.Locations[0], namedTypeSymbol.Name);
-
-        ////        context.ReportDiagnostic(diagnostic);
-        ////    }
-        ////}
     }
 }
