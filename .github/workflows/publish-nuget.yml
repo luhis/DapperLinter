@@ -20,7 +20,7 @@ jobs:
       
       # Publish
       - name: Publish if version is updated
-        uses: rohith/publish-nuget@v1
+        uses: rohith/publish-nuget@v2
         with: # All inputs are optional (details given below)
            project_dir: DapperAnalyser/DapperAnalyser # Defaults to repository root
         #   tag_format: v* # [*] gets replaced with version
