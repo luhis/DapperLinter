@@ -117,16 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AnalyzerDescription" xml:space="preserve">
+  <data name="ConstAnalyzerDescription" xml:space="preserve">
+    <value>SQL should be a const.</value>
+  </data>
+  <data name="ConstAnalyzerMessageFormat" xml:space="preserve">
+    <value>'{0}' is not a const.</value>
+  </data>
+  <data name="ConstAnalyzerTitle" xml:space="preserve">
+    <value>Dapper SQL should be in a const.</value>
+  </data>
+  <data name="SqlAnalyzerDescription" xml:space="preserve">
     <value>SQL reserve words should be all uppercase.</value>
     <comment>An optional longer localizable description of the diagnostic.</comment>
   </data>
-  <data name="AnalyzerMessageFormat" xml:space="preserve">
+  <data name="SqlAnalyzerMessageFormat" xml:space="preserve">
     <value>'{0}' contains incorrectly cased reserve words</value>
     <comment>The format-able message the diagnostic displays.</comment>
   </data>
-  <data name="AnalyzerTitle" xml:space="preserve">
-    <value>Reserve words should be upper case</value>
+  <data name="SqlAnalyzerTitle" xml:space="preserve">
+    <value>Reserve words should be upper case.</value>
     <comment>The title of the diagnostic.</comment>
   </data>
 </root>

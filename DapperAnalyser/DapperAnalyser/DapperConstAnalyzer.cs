@@ -7,15 +7,14 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DapperAnalyser
 {
-
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class DapperConstAnalyzer : DiagnosticAnalyzer
     {
         private const string DiagnosticId = "DapperConstAnalyser";
 
-        private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.AnalyzerTitle), Resources.ResourceManager, typeof(Resources));
-        private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
-        private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.AnalyzerDescription), Resources.ResourceManager, typeof(Resources));
+        private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.ConstAnalyzerTitle), Resources.ResourceManager, typeof(Resources));
+        private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.ConstAnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
+        private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.ConstAnalyzerDescription), Resources.ResourceManager, typeof(Resources));
         private const string Category = "Naming";
 
         private static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description);
@@ -66,24 +65,13 @@ namespace DapperAnalyser
 
             var query = invocationExpr.ArgumentList.Arguments.First();
 
-            if (query.Expression is LiteralExpressionSyntax lit && !SqlStringValidator.IsValid(lit.Token.ValueText))
+            if (query.Expression is IdentifierNameSyntax ident)
             {
-                var diagnostic = Diagnostic.Create(Rule, lit.GetLocation(), lit);
-                context.ReportDiagnostic(diagnostic);
-            }
-            else if (query.Expression is IdentifierNameSyntax ident)
-            {
-                ////var dec = context.SemanticModel.GetDeclaredSymbol(ident);
-
                 var flow = semanticModel.AnalyzeDataFlow(ident);
                 var value = semanticModel.GetConstantValue(ident);
-                var flowIn = flow.DataFlowsIn.Single();
-                var dec = semanticModel.GetDeclaredSymbol(flowIn.DeclaringSyntaxReferences.First().GetSyntax());
-                //flowIn.
-                //&& !SqlStringValidator.IsValid(ident.Identifier.ValueText);
-                if (value.HasValue && !SqlStringValidator.IsValid(value.Value as string))
+                if (!value.HasValue)
                 {
-                    var diagnostic = Diagnostic.Create(Rule, flowIn.DeclaringSyntaxReferences.First().GetSyntax().GetLocation(), $"\"{value.Value as string}\"");
+                    var diagnostic = Diagnostic.Create(Rule, ident.GetLocation(), $"{ident.Identifier.Text}");
                     context.ReportDiagnostic(diagnostic);
                 }
             }

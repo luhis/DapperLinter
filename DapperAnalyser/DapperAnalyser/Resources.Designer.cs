@@ -61,29 +61,56 @@ namespace DapperAnalyser {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SQL should be a const..
+        /// </summary>
+        internal static string ConstAnalyzerDescription {
+            get {
+                return ResourceManager.GetString("ConstAnalyzerDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; is not a const..
+        /// </summary>
+        internal static string ConstAnalyzerMessageFormat {
+            get {
+                return ResourceManager.GetString("ConstAnalyzerMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dapper SQL should be in a const..
+        /// </summary>
+        internal static string ConstAnalyzerTitle {
+            get {
+                return ResourceManager.GetString("ConstAnalyzerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SQL reserve words should be all uppercase..
         /// </summary>
-        internal static string AnalyzerDescription {
+        internal static string SqlAnalyzerDescription {
             get {
-                return ResourceManager.GetString("AnalyzerDescription", resourceCulture);
+                return ResourceManager.GetString("SqlAnalyzerDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; contains incorrectly cased reserve words.
         /// </summary>
-        internal static string AnalyzerMessageFormat {
+        internal static string SqlAnalyzerMessageFormat {
             get {
-                return ResourceManager.GetString("AnalyzerMessageFormat", resourceCulture);
+                return ResourceManager.GetString("SqlAnalyzerMessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reserve words should be upper case.
+        ///   Looks up a localized string similar to Reserve words should be upper case..
         /// </summary>
-        internal static string AnalyzerTitle {
+        internal static string SqlAnalyzerTitle {
             get {
-                return ResourceManager.GetString("AnalyzerTitle", resourceCulture);
+                return ResourceManager.GetString("SqlAnalyzerTitle", resourceCulture);
             }
         }
     }
