@@ -15,6 +15,7 @@ namespace DapperAnalyser
             {ToRegex("from"), "FROM"},
             {ToRegex("where"), "WHERE"},
             {ToRegex("on"), "ON"},
+            {ToRegex("in"), "IN"},
             {ToRegex("inner join"), "JOIN"},
             {ToRegex("join"), "JOIN"},
             {ToRegex("insert into"), "INSERT"},
