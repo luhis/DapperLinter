@@ -9,8 +9,8 @@
 
   <PropertyGroup>
     <PackageId>DapperAnalyser</PackageId>
-    <PackageVersion>0.0.0.3</PackageVersion>
-    <Version>0.0.0.3</Version>
+    <PackageVersion>0.0.0.4</PackageVersion>
+    <Version>0.0.0.4</Version>
     <Authors>Matthew McCorry</Authors>
     <PackageLicenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/luhis/dapperlinter</PackageProjectUrl>
