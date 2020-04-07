@@ -6,9 +6,8 @@ using Xunit;
 
 namespace DapperAnalyser.Test
 {
-    public class DapperSqlAnalyzerUnitTest : CodeFixVerifier
+    public class DapperReservedWordsAnalyserUnitTests : CodeFixVerifier
     {
-        //No diagnostics expected to show up
         [Fact]
         public void EmptyCode()
         {
@@ -41,7 +40,7 @@ namespace DapperDemo
 }";
             var expected = new DiagnosticResult
             {
-                Id = "DapperSqlAnalyser",
+                Id = "DapperReservedWordsAnalyser",
                 Message = "'\"select * from Person.Person where FirstName = 'Mark'\"' contains incorrectly cased reserve words",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
@@ -75,6 +74,65 @@ namespace DapperDemo
         }
 
         [Fact]
+        public void LowerCaseSelectAsync()
+        {
+            var test = @"
+namespace DapperDemo
+{
+    using Dapper;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    using System.Threading.Tasks;
+
+    public class C1
+    {
+        public async Task<IEnumerable<int>> A()
+        {
+            using (var connection = new SqlConnection(
+                ""Server = tcp:mhknbn2kdz.database.windows.net; Database = AdventureWorks2012; User ID = sqlfamily; Password = sqlf@m1ly; ""))
+            {
+                return await connection.QueryAsync<int>(""select * from Person.Person where FirstName = 'Mark'"");
+            }
+        }
+    }
+}";
+            var expected = new DiagnosticResult
+            {
+                Id = "DapperReservedWordsAnalyser",
+                Message = "'\"select * from Person.Person where FirstName = 'Mark'\"' contains incorrectly cased reserve words",
+                Severity = DiagnosticSeverity.Warning,
+                Locations =
+                    new[] {
+                        new DiagnosticResultLocation("Test0.cs", 16, 57)
+                    }
+            };
+
+            VerifyCSharpDiagnostic(test, expected);
+
+            var fixtest = @"
+namespace DapperDemo
+{
+    using Dapper;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    using System.Threading.Tasks;
+
+    public class C1
+    {
+        public async Task<IEnumerable<int>> A()
+        {
+            using (var connection = new SqlConnection(
+                ""Server = tcp:mhknbn2kdz.database.windows.net; Database = AdventureWorks2012; User ID = sqlfamily; Password = sqlf@m1ly; ""))
+            {
+                return await connection.QueryAsync<int>(""SELECT * FROM Person.Person WHERE FirstName = 'Mark'"");
+            }
+        }
+    }
+}";
+            VerifyCSharpFix(test, fixtest);
+        }
+
+        [Fact]
         public void LowerCaseSelectSqlConst()
         {
             var test = @"
@@ -99,7 +157,7 @@ namespace DapperDemo
 }";
             var expected = new DiagnosticResult
             {
-                Id = "DapperSqlAnalyser",
+                Id = "DapperReservedWordsAnalyser",
                 Message = "'\"select * from Person.Person where FirstName = 'Mark'\"' contains incorrectly cased reserve words",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
@@ -192,65 +250,6 @@ namespace DapperDemo
             VerifyCSharpFix(test, fixtest);
         }
 
-        [Fact]
-        public void LowerCaseSelectAsync()
-        {
-            var test = @"
-namespace DapperDemo
-{
-    using Dapper;
-    using System.Collections.Generic;
-    using System.Data.SqlClient;
-    using System.Threading.Tasks;
-
-    public class C1
-    {
-        public async Task<IEnumerable<int>> A()
-        {
-            using (var connection = new SqlConnection(
-                ""Server = tcp:mhknbn2kdz.database.windows.net; Database = AdventureWorks2012; User ID = sqlfamily; Password = sqlf@m1ly; ""))
-            {
-                return await connection.QueryAsync<int>(""select * from Person.Person where FirstName = 'Mark'"");
-            }
-        }
-    }
-}";
-            var expected = new DiagnosticResult
-            {
-                Id = "DapperSqlAnalyser",
-                Message = "'\"select * from Person.Person where FirstName = 'Mark'\"' contains incorrectly cased reserve words",
-                Severity = DiagnosticSeverity.Warning,
-                Locations =
-                    new[] {
-                        new DiagnosticResultLocation("Test0.cs", 16, 57)
-                    }
-            };
-
-            VerifyCSharpDiagnostic(test, expected);
-
-            var fixtest = @"
-namespace DapperDemo
-{
-    using Dapper;
-    using System.Collections.Generic;
-    using System.Data.SqlClient;
-    using System.Threading.Tasks;
-
-    public class C1
-    {
-        public async Task<IEnumerable<int>> A()
-        {
-            using (var connection = new SqlConnection(
-                ""Server = tcp:mhknbn2kdz.database.windows.net; Database = AdventureWorks2012; User ID = sqlfamily; Password = sqlf@m1ly; ""))
-            {
-                return await connection.QueryAsync<int>(""SELECT * FROM Person.Person WHERE FirstName = 'Mark'"");
-            }
-        }
-    }
-}";
-            VerifyCSharpFix(test, fixtest);
-        }
-
         //Diagnostic and CodeFix both triggered and checked for
         [Fact]
         public void UpperCaseSelect()
@@ -278,39 +277,14 @@ namespace DapperDemo
             VerifyCSharpDiagnostic(test);
         }
 
-        [Fact]
-        public void NotDapper()
-        {
-            var test = @"
-namespace DapperDemo
-{
-    using System;
-    using System.Collections.Generic;
-
-    public class Class2
-    {
-        public IEnumerable<Customer> A()
-        {
-            using (var connection = new Object())
-            {
-                const string x = ""select* from Person.Person where FirstName = 'Mark'"";
-            return connection.Query<Customer>(x);
-        }
-    }
-}
-}";
-
-            VerifyCSharpDiagnostic(test);
-        }
-
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new DapperSqlAnalyzerCodeFixProvider();
+            return new DapperReservedWordsAnalyzerCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new DapperSqlAnalyzer();
+            return new DapperReservedWordsAnalyzer();
         }
     }
 }

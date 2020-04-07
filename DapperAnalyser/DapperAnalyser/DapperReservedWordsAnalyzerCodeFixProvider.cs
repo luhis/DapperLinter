@@ -4,21 +4,21 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeActions;
+using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace DapperAnalyser
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(DapperSqlAnalyzerCodeFixProvider)), Shared]
-    public class DapperSqlAnalyzerCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(DapperReservedWordsAnalyzerCodeFixProvider)), Shared]
+    public class DapperReservedWordsAnalyzerCodeFixProvider : CodeFixProvider
     {
-        private const string title = "Correct SQL";
+        private const string title = "Correct SQL Casing";
 
         public sealed override ImmutableArray<string> FixableDiagnosticIds =>
-            ImmutableArray.Create(DapperSqlAnalyzer.DiagnosticId);
+            ImmutableArray.Create(DapperSqlStyleAnalyzer.DiagnosticId);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {
@@ -37,7 +37,7 @@ namespace DapperAnalyser
             // Find the type declaration identified by the diagnostic.
             var ancestors = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf();
             var declaration = ancestors.OfType<LiteralExpressionSyntax>().FirstOrDefault() ?? ancestors.OfType<LocalDeclarationStatementSyntax>().First().DescendantNodes().OfType<LiteralExpressionSyntax>().Single();
-          
+
 
             // Register a code action that will invoke the fix.
             context.RegisterCodeFix(
@@ -52,7 +52,7 @@ namespace DapperAnalyser
             CancellationToken cancellationToken)
         {
             // Compute new uppercase name.
-            var newName = SqlStringFixer.Fix(typeDecl.Token.ValueText);
+            var newName = SqlReservedWordsCaserFixer.Fix(typeDecl.Token.ValueText);
             var newToken = LiteralExpression(
                 SyntaxKind.StringLiteralExpression,
                 Literal(newName));

@@ -1,16 +1,16 @@
 using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Diagnostics;
+using SyntaxKind = Microsoft.CodeAnalysis.CSharp.SyntaxKind;
 
 namespace DapperAnalyser
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class DapperSqlAnalyzer : DiagnosticAnalyzer
+    public class DapperReservedWordsAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "DapperSqlAnalyser";
+        public const string DiagnosticId = "DapperReservedWordsAnalyser";
 
         // You can change these strings in the Resources.resx file. If you do not want your analyzer to be localize-able, you can use regular strings for Title and MessageFormat.
         // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Localizing%20Analyzers.md for more on localization
@@ -49,7 +49,7 @@ namespace DapperAnalyser
             if (memberAccessExpr == null)
                 return;
 
-            var targetFunctionNames = new[] {"Query", "QueryAsync", "Execute", "ExecuteAsync" };
+            var targetFunctionNames = new[] { "Query", "QueryAsync", "Execute", "ExecuteAsync" };
 
             if (targetFunctionNames.All(a => memberAccessExpr.Name.Identifier.Text != a))
                 return;
@@ -68,7 +68,7 @@ namespace DapperAnalyser
 
             var query = invocationExpr.ArgumentList.Arguments.First();
 
-            if (query.Expression is LiteralExpressionSyntax lit && !SqlStringValidator.IsValid(lit.Token.ValueText))
+            if (query.Expression is LiteralExpressionSyntax lit && !SqlReservedWordsCaserValidtor.IsValid(lit.Token.ValueText))
             {
                 var diagnostic = Diagnostic.Create(Rule, lit.GetLocation(), lit);
                 context.ReportDiagnostic(diagnostic);
@@ -78,7 +78,7 @@ namespace DapperAnalyser
                 var flow = semanticModel.AnalyzeDataFlow(ident);
                 var value = semanticModel.GetConstantValue(ident);
                 var flowIn = flow.DataFlowsIn.Single();
-                if (value.HasValue && !SqlStringValidator.IsValid(value.Value as string))
+                if (value.HasValue && !SqlReservedWordsCaserValidtor.IsValid(value.Value as string))
                 {
                     var diagnostic = Diagnostic.Create(Rule, flowIn.DeclaringSyntaxReferences.First().GetSyntax().GetLocation(), $"\"{value.Value as string}\"");
                     context.ReportDiagnostic(diagnostic);

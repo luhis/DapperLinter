@@ -5,4 +5,5 @@
 Rule ID | Category | Severity | Notes
 --------|----------|----------|-------
 DapperConstAnalyser | Naming | Warning | DapperConstAnalyzer
-DapperSqlAnalyser | Naming | Warning | DapperSqlAnalyzer
+DapperReservedWordsAnalyser | Naming | Warning | DapperReservedWordsAnalyzer
+DapperSqlStyleAnalyser | Naming | Warning | DapperSqlAnalyzer
