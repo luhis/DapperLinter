@@ -138,4 +138,13 @@
     <value>Reserve words should be upper case.</value>
     <comment>The title of the diagnostic.</comment>
   </data>
+  <data name="SqlStyleAnalyzerDescription" xml:space="preserve">
+    <value>SQL style should be followed</value>
+  </data>
+  <data name="SqlStyleAnalyzerMessageFormat" xml:space="preserve">
+    <value>'{0}' contains incorrectly styled SQL</value>
+  </data>
+  <data name="SqlStyleAnalyzerTitle" xml:space="preserve">
+    <value>SQL style should be followed</value>
+  </data>
 </root>

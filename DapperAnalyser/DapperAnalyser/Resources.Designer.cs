@@ -113,5 +113,32 @@ namespace DapperAnalyser {
                 return ResourceManager.GetString("SqlAnalyzerTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SQL style should be followed.
+        /// </summary>
+        internal static string SqlStyleAnalyzerDescription {
+            get {
+                return ResourceManager.GetString("SqlStyleAnalyzerDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; contains incorrectly styled SQL.
+        /// </summary>
+        internal static string SqlStyleAnalyzerMessageFormat {
+            get {
+                return ResourceManager.GetString("SqlStyleAnalyzerMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SQL style should be followed.
+        /// </summary>
+        internal static string SqlStyleAnalyzerTitle {
+            get {
+                return ResourceManager.GetString("SqlStyleAnalyzerTitle", resourceCulture);
+            }
+        }
     }
 }

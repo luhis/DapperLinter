@@ -43,7 +43,7 @@ namespace DapperDemo
             var expected = new DiagnosticResult
             {
                 Id = "DapperSqlStyleAnalyser",
-                Message = "'\"SELECT * FROM Users INNER JOIN Departments ON Departments.DepartmentId = Users.DepartmentId\"' contains incorrectly cased reserve words",
+                Message = "'\"SELECT * FROM Users INNER JOIN Departments ON Departments.DepartmentId = Users.DepartmentId\"' contains incorrectly styled SQL",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
