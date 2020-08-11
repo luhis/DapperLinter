@@ -36,7 +36,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.0.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.6.0" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.8.12">
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.8.1017">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
