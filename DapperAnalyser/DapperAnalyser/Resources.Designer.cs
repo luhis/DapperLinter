@@ -79,7 +79,7 @@ namespace DapperAnalyser {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dapper SQL should be in a const..
+        ///   Looks up a localized string similar to Dapper SQL should be in a const.
         /// </summary>
         internal static string ConstAnalyzerTitle {
             get {
@@ -106,7 +106,7 @@ namespace DapperAnalyser {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reserve words should be upper case..
+        ///   Looks up a localized string similar to Reserve words should be upper case.
         /// </summary>
         internal static string SqlAnalyzerTitle {
             get {
