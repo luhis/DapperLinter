@@ -124,7 +124,7 @@
     <value>'{0}' is not a const.</value>
   </data>
   <data name="ConstAnalyzerTitle" xml:space="preserve">
-    <value>Dapper SQL should be in a const.</value>
+    <value>Dapper SQL should be in a const</value>
   </data>
   <data name="SqlAnalyzerDescription" xml:space="preserve">
     <value>SQL reserve words should be all uppercase.</value>
@@ -135,7 +135,7 @@
     <comment>The format-able message the diagnostic displays.</comment>
   </data>
   <data name="SqlAnalyzerTitle" xml:space="preserve">
-    <value>Reserve words should be upper case.</value>
+    <value>Reserve words should be upper case</value>
     <comment>The title of the diagnostic.</comment>
   </data>
   <data name="SqlStyleAnalyzerDescription" xml:space="preserve">
